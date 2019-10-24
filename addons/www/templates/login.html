@@ -11,6 +11,16 @@
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
     <form action="#" method="post">
+    {{ form.csrf_token }}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+						{% if messages %}
+							{% for category, message in messages %}
+								<div class = "alert alert-{{ category }}">
+									{{ message }}
+								</div>
+							{% endfor %}
+						{% endif %}
+					{% endwith %}
       <div class="form-group has-feedback">
             {% if form.username.errors %}
               {{ form.username(class="form-control form-control-lg is-invalid") }}
@@ -46,7 +56,7 @@
           </div>
         </div>
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+          {{ form.submit(class='btn btn-primary btn-block btn-flat') }}
         </div>
       </div>
     </form>
