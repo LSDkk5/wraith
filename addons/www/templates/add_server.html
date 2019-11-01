@@ -3,80 +3,6 @@
 
 {% block content %}
 <body onload="DefaultRconPort(), ValidatePort()">
-<div class="wrapper">
-  <header class="main-header">
-    <a href="../../index2.html" class="logo">
-      <span class="logo-mini"><b>W</b>TH</span>
-      <span class="logo-lg"><b>Wraith</b></span>
-    </a>
-    <nav class="navbar navbar-static-top">
-      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </a>
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <li class="dropdown user user-menu">
-            <a>
-              <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Admin</span>
-            </a>
-          </li>
-          <li>
-            <a href="#"><i class="fa fa-sign-out"></i></a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <aside class="main-sidebar">
-    <section class="sidebar">
-      <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-plus"></i> <span>Add server</span>
-          </a>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-server"></i>
-            <span>Servers</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Server name</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="../widgets.html">
-            <i class="fa fa-users"></i> <span>Users</span>
-            <span class="pull-right-container">
-            </span>
-          </a>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-pie-chart"></i>
-            <span>Groups</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Morris</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Flot</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Inline charts</a></li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-  </aside>
   <div class="content-wrapper">
     <section class="content-header">
       <h1>
@@ -98,12 +24,12 @@
             <div class="box-header with-border">
               <h3 class="box-title">Add server form</h3>
             </div>
-            <form name="form" class="form-horizontal" autocomplete="off" method="POST">
+            <form name="form" action="{{url_for('add_server')}}"class="form-horizontal" autocomplete="off" method="POST">
               <div class="box-body">
                 <div class="form-group">
                   <label id='nameLabel' for="name" class="col-sm-2 control-label">Name</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="name" placeholder="Server name/description">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Server name/description">
                   </div>
                 </div>
                 <div id="ipA" class="form-group">
@@ -116,21 +42,20 @@
                 <div id="rconPss" class="form-group">
                   <label id="rconPLabel" for="rconPass" class="col-sm-2 control-label">RCON pass</label>
                   <div class="col-sm-6">
-                    <input type="password" class="form-control" id="rconPass" oninput="ValidatePassword(document.form.rconPass, document.form.rconPss)" placeholder="Password for RCON protocol">
+                    <input type="password" class="form-control" id="rconPass" name="rconPass" oninput="ValidatePassword(document.form.rconPass, document.form.rconPss)" placeholder="Password for RCON protocol">
                   </div>
                 </div>
                 <div id="rconP" class="form-group">
                   <label id='rconLabel' for="rconPort" class="col-sm-2 control-label">RCON port</label>
                   <div class="col-sm-3">
-                    <input type="text" class="form-control" id="rconPort" oninput="ValidatePort()">
+                    <input type="text" class="form-control" id="rconPort" name="rconPort" oninput="ValidatePort()">
                     <span class="help-block">Default rcon port for this game.</span>
                   </div>
                 </div>
-                
                 <div class="form-group">
                   <label for="inputPassword3" class="col-sm-2 control-label">Game</label>
                   <div class="col-sm-2">
-                    <select id='gameType' onChange="DefaultRconPort()" class="form-control">
+                    <select id="gameType" name="gameType"  onChange="DefaultRconPort()" class="form-control">
                     <option>Minecraft</option>
                     <option>Rust</option>
                   </select>                  
@@ -192,7 +117,7 @@
     if(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipAddress.value)){
       document.getElementById("ipA").classList.remove('has-error');
       document.getElementById("ipA").classList.add('has-success');
-      document.getElementById('rconPort').innerHTML = '<i class="fa fa-check"></i> Ip adress';
+      document.getElementById('ipALabel').innerHTML = '<i class="fa fa-check"></i> Ip adress';
       document.getElementById("ipAhb").textContent = ''
       return (true)
     }
